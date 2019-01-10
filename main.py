@@ -57,5 +57,4 @@ async def joke(ctx):
     else:
         await client.say('oops!I ran out of jokes')
 
-        
-client.run('Token')
+client.run(os.getenv('Token'))
