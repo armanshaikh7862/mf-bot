@@ -129,6 +129,7 @@ async def help(ctx):
       embed.add_field(name = '!mfmeme',value = 'To see rabdom memes',inline = False)
       embed.add_field(name = '!mfjoke',value ='To see random jokes',inline = False)
       embed.add_field(name = '!mfgifsearch',value ='To search anything and get result as gif image',inline = False)
+      embed.add_field(name = '!mftweet',value ='To tweet anything from any id. ``!mftweet <UserName of twitter> <any text>``',inline = False)
       await client.say(embed=embed)
      
 
