@@ -100,6 +100,23 @@ async def meme(ctx):
             embed.set_footer(text=f'Requested by: {ctx.message.author.display_name}', icon_url=f'{ctx.message.author.avatar_url}')
             embed.timestamp = datetime.datetime.utcnow()
             await client.say(embed=embed)
+        
+@client.command(pass_context = True)
+async def help(ctx):
+    if ctx.message.author.bot:
+      return
+    else:
+      author = ctx.message.author
+      r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+      embed = discord.Embed(color = discord.Color((r << 16) + (g << 8) + b))
+      embed.set_author(name='Help')
+      embed.set_image(url = 'https://image.ibb.co/caM2BK/help.gif')
+      embed.add_field(name = '!mfsay',value ='To make bot send any message in channel',inline = False)
+      embed.add_field(name = '!mfmeme',value = 'To see rabdom memes',inline = False)
+      embed.add_field(name = '!mfjoke',value ='To see random jokes',inline = False)
+      embed.add_field(name = '!mfgifsearch',value ='To search anything and get result as gif image',inline = False)
+      await client.say(embed=embed)
+     
 
         
 client.run(os.getenv('Token'))
