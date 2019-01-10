@@ -57,4 +57,28 @@ async def joke(ctx):
     else:
         await client.say('oops!I ran out of jokes')
 
+@client.command(pass_context=True)
+async def gifsearch(ctx, *keywords):
+    if keywords:
+        keywords = "+".join(keywords)
+    else:
+        await client.say('Invalid args')
+        return
+    r, g, b = tuple(int(x * 255) for x in colorsys.hsv_to_rgb(random.random(), 1, 1))
+    embed = discord.Embed(title='Search Results for', description=f'{keywords}', color = discord.Color((r << 16) + (g << 8) + b))
+    url = ("http://api.giphy.com/v1/gifs/search?&api_key={}&q={}"
+           "".format(GIPHY_API_KEY, keywords))
+    async with aiohttp.get(url) as r:
+        result = await r.json()
+        if r.status == 200:
+            if result["data"]:
+                embed.set_image(url=result["data"][0]["url"])
+                embed.set_footer(text=f'Requested by: {ctx.message.author.display_name}', icon_url=f'{ctx.message.author.avatar_url}')
+                embed.timestamp = datetime.datetime.utcnow()
+                await client.say(embed=embed)
+            else:
+                await client.say("No results found.")
+        else:
+            await client.say("Error contacting the API")
+        
 client.run(os.getenv('Token'))
